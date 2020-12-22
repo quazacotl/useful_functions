@@ -1,27 +1,15 @@
 // Get scrollbar width
 
 function getScrollBarWidth () {
-    let inner = document.createElement('p');
-    inner.style.width = "100%";
-    inner.style.height = "200px";
+    let div = document.createElement('div');
+    div.style.width = '40px';
+    div.style.height = '40px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
+    document.body.appendChild(div);
 
-    let outer = document.createElement('div');
-    outer.style.position = "absolute";
-    outer.style.top = "0px";
-    outer.style.left = "0px";
-    outer.style.visibility = "hidden";
-    outer.style.width = "200px";
-    outer.style.height = "150px";
-    outer.style.overflow = "hidden";
-    outer.appendChild (inner);
+    let scrollBarWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
 
-    document.body.appendChild (outer);
-    let w1 = inner.offsetWidth;
-    outer.style.overflow = 'scroll';
-    let w2 = inner.offsetWidth;
-    if (w1 == w2) w2 = outer.clientWidth;
-
-    document.body.removeChild (outer);
-
-    return (w1 - w2);
+    return scrollBarWidth;
 }
